@@ -31,7 +31,6 @@
                     alert("Erro ao obter os dados.");
                 }
                 else {
-                    //console.log(retorno);
                     for (var i = 0; i < retorno.length; i++) {
                         var estado = retorno[i];
                         var id = estado.id;
@@ -42,32 +41,48 @@
                         var colunaID = "<td>" + id + "</td>";
                         var colunaSigla = "<td>" + sigla + "</td>";
                         var colunaNome = "<td>" + nome + "</td>";
+                        var colunaAcao = "<td><button id='btnTestar' onclick='Buscar(" + id + ");'>Buscar</button></td>";
                         var linhaFIM = "</tr>";
 
-                        var linha = linhaINI + colunaID + colunaSigla + colunaNome + linhaFIM;
+                        var linha = linhaINI + colunaID + colunaSigla + colunaNome + colunaAcao + linhaFIM;
 
                         $("#tblEstados tbody").append(linha);
                     }
                 }
-            })
+            });
         }
 
         function Testar() {
             alert("Testando o javascript!");
         }
 
+        function Buscar(iduf){
+            var urlServico = 'https://servicodados.ibge.gov.br/api/v1/localidades/estados/' + iduf;
+            $.get(urlServico, function(retorno, status){
+                if (retorno == "") {
+                    alert("Erro ao obter os dados.");
+                    return;
+                }
+                localStorage.setItem("ufselecionada", JSON.stringify(retorno));
+                window.location.href = "municipiosporuf.html";
+            });
+        }
+
     </script>
 </head>
 <body>
+    <h1>Atacado API - Capacitação PSG - 202204</h1>
+    <br />
     <h1>Estados</h1>
     <br />
     <!--<button id="btnCarregar" onclick="CarregarEstados();">Carregar</button>-->
-    <table id="tblEstados" style="width:15%">
+    <table id="tblEstados" style="width:20%">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Sigla</th>
                 <th>Nome</th>
+                <th>Ação</th>
             </tr>
         </thead>
         <tbody></tbody>
