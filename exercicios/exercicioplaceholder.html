@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            th {
+                background-color: black;
+                color: white;
+                border:white;
+                border-collapse: collapse;
+            }
+            tr:hover {
+                background-color: gray;
+            }
+        </style>
+        <meta charset="UTF-8" />
+        <title></title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script lang="javascript">
+
+             $(document).ready(function(){
+                CarregarUser();
+
+                $('#ddlUser').change(function(){
+                    $('#ddlPost').empty();
+                    $('#tblComments tbody').empty()
+                    var iduser = $('#ddlUser option:selected').val();
+                    CarregarPost(iduser);
+                })
+
+                $('#ddlPost').change(function(){
+                    $('#tblComments tbody').empty();
+                    var idpost = $('#ddlPost option:selected').val();
+                    CarregarComments(idpost);
+                });
+            });
+
+            function CarregarUser(){
+                var urlServico = 'https://jsonplaceholder.typicode.com/users';
+                $.get(urlServico, function(retorno, status){
+                    if (retorno.length == 0) {
+                        alert("Erro ao obter os dados.");
+                        return;
+                    }
+                    else {
+                        for (var i = 0; i < retorno.length; i++) {
+                            var user = retorno[i];
+                            $('#ddlUser').append('<option value="' + user.id + '">' + user.name + ' | ' + user.email + '</option>');
+                        }
+                    }
+                });
+            }
+
+            function CarregarPost(userId){
+                var urlServico = 'https://jsonplaceholder.typicode.com/users/' + userId + '/posts';
+                $.get(urlServico, function(retorno, status){
+                    if (retorno.length == 0) {
+                        alert("Erro ao obter os dados.");
+                        return;
+                    }
+                    else {
+                        for (var i = 0; i < retorno.length; i++) {
+                            var post = retorno[i];
+                            $('#ddlPost').append('<option value="' + post.id + '">' + post.title + '</option>');
+                        }
+                    }
+                })
+            }
+
+            function CarregarComments(postId){
+                var urlServico = 'https://jsonplaceholder.typicode.com/posts/' + postId + '/comments';
+                $.get(urlServico, function(retorno, status){
+                    if (retorno.length == 0) {
+                        alert("Erro ao obter os dados.");
+                        return;
+                    }
+                    else{
+                        for (var i = 0; i < retorno.length; i++) {
+                            var cmts = retorno[i];
+
+                            $('#tblComments tbody').append('<tr><td>' + cmts.id + '</td><td>' + cmts.name + '</td><td>' + cmts.email + '</td><td>' + cmts.body + '</td></tr>');
+                        }
+                    }
+                });
+            }
+
+        </script>
+    </head>
+    <body>
+        <div>
+            <label for="ddlUser">User:</label>
+            <select id="ddlUser" name="ddlUser">
+                <option value="0">Escolha um User</option>
+            </select>
+            <br><br>
+            <label for="ddlPost">Post:</label>
+            <select id="ddlPost" name="ddlPost">
+                <option value="0">Escolha um Post</option>
+            </select>
+        </div>
+        <br><br>
+        <div>
+            <table id="tblComments">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>E-mail</th>
+                        <th>Body</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </body>
+</html>
