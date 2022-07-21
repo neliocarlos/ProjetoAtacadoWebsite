@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title></title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="../../../js/atacado/estoque/admincategorias.js"></script>
+    </head>
+    <body>
+        <div>
+            <div>Administrar - Categorias - <label id="lblOperacao"></label></div>
+            <br>
+            <div>
+                <label for="txtId">ID:</label>
+                <input type="text" name="txtId" id="txtId"/>
+            </div>
+            <div>
+                <label for="txtDescricao">Descrição:</label>
+                <input type="text" name="txtDescricao" id="txtDescricao"/>
+            </div>
+            <div>
+                <label for="radSituacao">Situação:</label>
+                <input type="radio" name="radSituacao" id="radTrue" value="true"/>
+                <label for="radTrue">Ativo</label>
+                <input type="radio" name="radSituacao" id="radFalse" value="false"/>
+                <label for="radFalse">Inativo</label>
+            </div>
+            <div>
+                <button id="btnConfirmar">Confirmar</button>
+                <button id="btnCancelar">Cancelar</button>
+            </div>
+        </div>
+    </body>
+</html>

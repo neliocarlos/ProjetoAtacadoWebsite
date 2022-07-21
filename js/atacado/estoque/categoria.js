@@ -1,5 +1,10 @@
 $(document).ready(function(){
     CarregarCategorias();
+
+    $('#btnInclusao').click(function(){
+        localStorage.setItem('opercat', '1');
+        window.location = 'admincategorias.html';
+    })
 });
 
 function CarregarCategorias(){
@@ -12,8 +17,23 @@ function CarregarCategorias(){
         else {
             for (var i = 0; i < retorno.length; i++) {
                 var cat = retorno[i];
-                $('#tblCat tbody').append('<tr><td>' + cat.codigo + '</td><td>' + cat.descricao + '</td></tr>');
+                var alterar = '<td><button id="btnAlteracao" onclick="AcionarAlteracao(' + cat.codigo + ');">Alterar</button></td>';
+                var excluir = '<td><button id="btnExclusao" onclick="AcionarExclusao(' + cat.codigo + ');">Excluir</button></td>';
+
+                $('#tblCat tbody').append('<tr><td>' + cat.codigo + '</td><td>' + cat.descricao + '</td><td>' + cat.situacao + '</td>' + alterar + excluir + '</tr>');
             }
         }
     });
+}
+
+function AcionarAlteracao(id){
+    localStorage.setItem('opercat', '2');
+    localStorage.setItem('opercatid', id);
+    window.location = 'admincategorias.html';
+}
+
+function AcionarExclusao(id){
+    localStorage.setItem('opercat', '3');
+    localStorage.setItem('opercatid', id);
+    window.location = 'admincategorias.html';
 }
