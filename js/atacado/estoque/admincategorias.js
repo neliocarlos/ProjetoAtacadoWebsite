@@ -2,12 +2,7 @@ $(document).ready(function(){
     AvaliarOperacao();
 
     $('#btnCancelar').click(function(){
-        var operacao = localStorage.getItem('opercat');
-        if ((operacao == 2) || (operacao == 3)){
-            localStorage.removeItem('opercatid');
-        }
-        localStorage.removeItem('opercat');
-        window.location = 'categorias.html';
+        Cancelar();
     });
 });
 
@@ -42,6 +37,7 @@ function CarregarCategoria(id){
         else {
             $('#txtId').val(retorno.codigo);
             $('#txtId').prop('readonly', true);
+            $('#txtId').prop('disabled', true);
 
             $('#txtDescricao').val(retorno.descricao);
             
@@ -57,7 +53,9 @@ function CarregarCategoria(id){
 
 function PrepararExclusao(){
     $('#txtId').prop('readonly', true);
+    $('#txtId').prop('disabled', true);
     $('#txtDescricao').prop('readonly', true);
+    $('#txtDescricao').prop('disabled', true);
     $('#radTrue').prop('disabled', true);
     $('#radFalse').prop('disabled', true);
 }
@@ -70,33 +68,87 @@ function AcionarInclusao(){
     };
 
     categoria.descricao = $('#txtDescricao').val();
-    if ($('#radTrue').val(true)){
-        categoria.situacao = true;
-    }
-    else {
-        categoria.situacao = false;
-    }
+    categoria.situacao = $("input[name='radSituacao']:checked").is(':checked') ? true : false;
 
     var urlServico = 'https://localhost:7171/api/estoque/Categoria';
-    $.post(urlServico, categoria, function(retorno, status){
-        if (retorno == ''){
-            alert('Ocorreu um erro ao executar a inclusão.');
-        }
-        else if (retorno.codigo != 0) {
-            alert('Categoria adicionada com sucesso (ID: ' + retorno.codigo + ').');
+
+    $.ajax({
+        url: urlServico,
+        type: 'post',
+        dataType: 'json',
+        data: JSON.stringify(categoria),
+        contentType: 'application/json',
+        success: function (data) {
+            alert('Categoria adicionada com sucesso (ID: ' + data.codigo + ').');
+            Cancelar(); 
         }
     });
 }
 
+function AcionarAlteracao(){
+    var categoria = {
+        codigo: 0,
+        descricao: 'string',
+        situacao: true
+    };
+
+    categoria.codigo = $('#txtId').val();
+    categoria.descricao = $('#txtDescricao').val();
+    categoria.situacao = $('#radTRUE').is(':checked') ? true : false;
+
+    var urlServico = 'https://localhost:7171/api/estoque/Categoria';
+
+    $.ajax({
+        url: urlServico,
+        type: 'put',
+        dataType: 'json',
+        data: JSON.stringify(categoria),
+        contentType: 'application/json',
+        success: function (data) {
+            alert('Categoria alterada com sucesso (ID: ' + data.codigo + ').');
+            Cancelar(); 
+        }
+    });
+}
+
+function AcionarExclusao(){
+
+    var id = localStorage.getItem('opercatid');
+    var urlServico = 'https://localhost:7171/api/estoque/Categoria/' + id;
+
+    $.ajax({
+        url: urlServico,
+        type: 'delete',
+        dataType: null,
+        data: null,
+        contentType: 'application/json',
+        success: function (data) {
+            alert('Categoria excluída com sucesso (ID: ' + data.codigo + ').');
+            Cancelar(); 
+        }
+    });
+}
+
+// O botão confirmar foi declarado na página HTML
 function Confirmar(){
     var operacao = localStorage.getItem('opercat');
     if (operacao == 1) {
         AcionarInclusao();
     }
     else if (operacao == 2) {
-        
+        AcionarAlteracao();
     }
     else if (operacao == 3) {
-
+        AcionarExclusao();
     }
 }
+
+function Cancelar(){
+    var operacao = localStorage.getItem('opercat');
+        if ((operacao == 2) || (operacao == 3)){
+            localStorage.removeItem('opercatid');
+        }
+        localStorage.removeItem('opercat');
+        window.location = 'categorias.html';
+}
+
