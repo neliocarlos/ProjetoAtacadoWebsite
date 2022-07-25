@@ -17,8 +17,8 @@ function CarregarCategorias(){
         else {
             for (var i = 0; i < retorno.length; i++) {
                 var cat = retorno[i];
-                var alterar = '<td><button id="btnAlteracao" onclick="AcionarAlteracao(' + cat.codigo + ');">Alterar</button></td>';
-                var excluir = '<td><button id="btnExclusao" onclick="AcionarExclusao(' + cat.codigo + ');">Excluir</button></td>';
+                var alterar = '<td><button id="btnAlteracao" class="btn-warning" onclick="AcionarAlteracao(' + cat.codigo + ');">Alterar</button></td>';
+                var excluir = '<td><button id="btnExclusao" class="btn-danger" onclick="AcionarExclusao(' + cat.codigo + ');">Excluir</button></td>';
 
                 $('#tblCat tbody').append('<tr><td>' + cat.codigo + '</td><td>' + cat.descricao + '</td><td>' + cat.situacao + '</td>' + alterar + excluir + '</tr>');
             }

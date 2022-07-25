@@ -1,43 +1,40 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style>
-            td {
-                border: 1px solid black;
-                border-collapse: collapse;
-            }
-            th {
-                background-color: black;
-                color: white;
-                border:white;
-                border-collapse: collapse;
-            }
-            tr:hover {
-                background-color: gray;
-            }
-        </style>
         <meta charset="UTF-8" />
         <title></title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="../../../js/atacado/estoque/categoria.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
     </head>
     <body>
-        <div>
-            <div>
-            <h1>Categorias</h1>
+        <div class="container-fluid bg-secondary">
+            <div class="row bg-dark">
+                <div class="col-md-2">
+                    <img width="100" height="100" src="http://cms.psgtecnologia.com.br/uploads/logo_psg_branca_fb6edd3b65.svg" alt="PSG Logo">
+                </div>
+                <div class="col-md-8">
+                    <h1 class="text-white text-center display-3">Categorias</h1>
+                </div>
+                <div class="cold-md-2"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-12">
+                    <button id="btnInclusao" class="btn-outline-primary btn-block">Incluir Categoria</button>
+                </div>
             </div>
             <br>
             <div>
-                <button id="btnInclusao">Incluir Categoria</button>
-            </div>
-            <br>
-            <div>
-                <table id="tblCat">
-                    <thead>
+                <table id="tblCat" class="table table-bordered bg-light table-hover">
+                    <thead class="bg-dark text-white">
                         <tr>
                             <th>Código</th>
                             <th>Descrição</th>
                             <th>Situação</th>
+                            <th colspan="2" class="text-center">Ações</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -47,3 +44,4 @@
         </div>
     </body>
 </html>
+
