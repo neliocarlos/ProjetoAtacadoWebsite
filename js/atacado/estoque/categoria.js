@@ -19,8 +19,15 @@ function CarregarCategorias(){
                 var cat = retorno[i];
                 var alterar = '<td><button id="btnAlteracao" class="btn-warning" onclick="AcionarAlteracao(' + cat.codigo + ');">Alterar</button></td>';
                 var excluir = '<td><button id="btnExclusao" class="btn-danger" onclick="AcionarExclusao(' + cat.codigo + ');">Excluir</button></td>';
+                var situacao;
+                if (cat.situacao == true){
+                    situacao = "Ativo";
+                }
+                else {
+                    situacao = "Inativo";
+                }
 
-                $('#tblCat tbody').append('<tr><td>' + cat.codigo + '</td><td>' + cat.descricao + '</td><td>' + cat.situacao + '</td>' + alterar + excluir + '</tr>');
+                $('#tblCat tbody').append('<tr><td>' + cat.codigo + '</td><td>' + cat.descricao + '</td><td>' + situacao + '</td>' + alterar + excluir + '</tr>');
             }
         }
     });
